@@ -60,6 +60,13 @@ const TaskBoard = () => {
     console.log("deleted");
   }
 
+  function handleOnFavourite(taskId) {
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    const newTasks = [...tasks];
+    newTasks[taskIndex].isFavourite = !newTasks[taskIndex].isFavourite;
+    setTasks(newTasks);
+  }
+
   return (
     <section
       className="mb-20 flex flex-col justify-center items-center md:px-6"
@@ -87,6 +94,7 @@ const TaskBoard = () => {
             tasks={tasks}
             onEdit={handleOnEdit}
             onDelete={handleDeleteTask}
+            onFavourite={handleOnFavourite}
           />
         </div>
       </div>
