@@ -1,5 +1,4 @@
-import StarIcon from "../StarIcon";
-
+import { FaStar } from "react-icons/fa";
 const TaskList = ({ tasks }) => {
   return (
     <div className="overflow-auto">
@@ -36,7 +35,11 @@ const TaskList = ({ tasks }) => {
               className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2"
             >
               <td>
-                <StarIcon />
+                {task.isFavourite ? (
+                  <FaStar color="yellow" />
+                ) : (
+                  <FaStar color="gray" />
+                )}
               </td>
               <td>{task.title}</td>
               <td>
