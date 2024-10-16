@@ -21,7 +21,7 @@ const TaskBoard = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState(null);
   //adding a task
-  function handleAddTask(e, newTask, isAdd) {
+  function handleAddEditTask(e, newTask, isAdd) {
     if (isAdd) {
       e.preventDefault();
       setTasks([...tasks, newTask]);
@@ -44,6 +44,11 @@ const TaskBoard = () => {
     setTaskToUpdate(newTask);
     setShowAddModal(true);
   };
+  // /onCloseClick modal
+  function onCloseClick() {
+    setShowAddModal(false);
+    setTaskToUpdate(null);
+  }
 
   return (
     <section
@@ -51,7 +56,11 @@ const TaskBoard = () => {
       id="tasks"
     >
       {showAddModal && (
-        <AddTask onSave={handleAddTask} taskToUpdate={taskToUpdate} />
+        <AddTask
+          onSave={handleAddEditTask}
+          taskToUpdate={taskToUpdate}
+          onCloseClick={onCloseClick}
+        />
       )}
       <div className="container">
         {/* <!-- Search Box --> */}

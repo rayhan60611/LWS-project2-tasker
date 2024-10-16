@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddTask = ({ onSave, taskToUpdate }) => {
+const AddTask = ({ onSave, taskToUpdate, onCloseClick }) => {
   const [task, setTask] = useState(
     taskToUpdate || {
       id: crypto.randomUUID(),
@@ -93,13 +93,19 @@ const AddTask = ({ onSave, taskToUpdate }) => {
           </div>
         </div>
 
-        <div className="mt-16 flex justify-center lg:mt-20">
+        <div className="mt-16 flex justify-between lg:mt-20 ">
           <button
             onClick={(e) => onSave(e, task, isAdd)}
             type="submit"
             className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
           >
-            Save
+            {isAdd ? "Add New Task" : "Update Task"}
+          </button>
+          <button
+            onClick={onCloseClick}
+            className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
+          >
+            Close
           </button>
         </div>
       </form>
