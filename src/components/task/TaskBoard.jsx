@@ -5,6 +5,7 @@ import SearchTask from "./SearchTask";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
 import AddTask from "./AddTask";
+import NoTaskAvailable from "../NoTaskAvailable";
 // import { BiLogIn } from "react-icons/bi";
 
 const TaskBoard = () => {
@@ -50,21 +51,29 @@ const TaskBoard = () => {
     setTaskToUpdate(null);
   }
 
+  //delete a single task
   function handleDeleteTask(taskId) {
     const taskAfterDelete = tasks.filter((task) => task.id !== taskId);
     setTasks(taskAfterDelete);
   }
-
+  // delete all task
   function handleDeleteAllClick() {
     setTasks([]);
     console.log("deleted");
   }
-
+  //on favourite star
   function handleOnFavourite(taskId) {
     const taskIndex = tasks.findIndex((task) => task.id === taskId);
     const newTasks = [...tasks];
     newTasks[taskIndex].isFavourite = !newTasks[taskIndex].isFavourite;
     setTasks(newTasks);
+  }
+  //searching a task based on title
+  function handleSearch(searchString) {
+    const filtered = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchString.toLowerCase())
+    );
+    setTasks([...filtered]);
   }
 
   return (
@@ -82,7 +91,7 @@ const TaskBoard = () => {
       <div className="container">
         {/* <!-- Search Box --> */}
         <div className="p-2 flex justify-end">
-          <SearchTask />
+          {tasks.length > 0 ? <SearchTask onSearch={handleSearch} /> : null}
         </div>
         {/* <!-- Search Box Ends --> */}
         <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
@@ -90,12 +99,16 @@ const TaskBoard = () => {
             onAddClick={() => setShowAddModal(true)}
             onDeleteAllClick={handleDeleteAllClick}
           />
-          <TaskList
-            tasks={tasks}
-            onEdit={handleOnEdit}
-            onDelete={handleDeleteTask}
-            onFavourite={handleOnFavourite}
-          />
+          {tasks.length > 0 ? (
+            <TaskList
+              tasks={tasks}
+              onEdit={handleOnEdit}
+              onDelete={handleDeleteTask}
+              onFavourite={handleOnFavourite}
+            />
+          ) : (
+            <NoTaskAvailable />
+          )}
         </div>
       </div>
     </section>
